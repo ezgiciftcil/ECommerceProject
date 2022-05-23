@@ -1,3 +1,7 @@
+using BusinessLayer.Services;
+using BusinessLayer.Services.Interfaces;
+using DataAccessLayer.Repositories;
+using DataAccessLayer.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -24,6 +28,10 @@ namespace UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserTypeRepository, UserTypeRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserTypeService, UserTypeService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

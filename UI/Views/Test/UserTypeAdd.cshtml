@@ -1,0 +1,17 @@
+﻿@model UI.Models.Text
+@{
+    <form action="@Url.Action("UserTypeAdd", "Test")" method="post">
+
+        <div class="input-group mb-3">
+            <input asp-for="TextString" type="text" class="form-control" placeholder="Company Name">
+        </div>
+        
+
+        <div class="row">
+            <div class="col align-self-center">
+                <button type="submit" class="btn btn-dark btn-block">Register as an Employer</button>
+            </div>
+
+        </div>
+    </form>
+}

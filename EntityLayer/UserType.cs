@@ -1,14 +1,18 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
 
 namespace EntityLayer
 {
-    public class UserType
+    public class UserType:IEntity
     {
-        [Key] 
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public UserType()
+        {
+            if(Users==null) 
+                Users = new List<User>();
+        }
         public int UserTypeId { get; set; }
-        [Required]
         public string TypeName { get; set; }
+        public List<User> Users { get; set; } 
+
+
     }
 }

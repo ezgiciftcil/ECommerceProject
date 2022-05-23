@@ -1,28 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntityLayer
 {
-    public class User
+    public class User:IEntity
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public User()
+        {
+            if (Addresses == null)
+                Addresses = new List<Address>();
+        }
         public int UserId { get; set; }
         public UserType UserType { get; set; }
-        [Required]
+        public int UserTypeId { get; set; }
         public string FirstName { get; set; }
-        [Required]
         public string LastName { get; set; }
-        [Required]
         public string Password { get; set; }
-        [Required]
         public string Email { get; set; }
-        [Required]
         public string PhoneNumber { get; set; }
-        [Required]
         public DateTime CreatedDate { get; set; }
-        [Required]
-        public string Adress { get; set; }
+        public List<Address> Addresses { get; set; }
     }
 }
