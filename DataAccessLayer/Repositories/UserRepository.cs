@@ -30,6 +30,15 @@ namespace DataAccessLayer.Repositories
             return context.Users.Find(id);
         }
 
+        public int GetUserIdByEmail(string Email)
+        {
+            var userId= context.Users
+                        .Where(m => m.Email == Email)
+                        .Select(m => m.UserId)
+                        .SingleOrDefault();
+            return userId;
+        }
+
         public void Update(User user)
         {
             context.Update(user);

@@ -1,3 +1,5 @@
+using BusinessLayer.Auth;
+using BusinessLayer.Auth.Interfaces;
 using BusinessLayer.Services;
 using BusinessLayer.Services.Interfaces;
 using DataAccessLayer.Repositories;
@@ -32,6 +34,11 @@ namespace UI
             services.AddScoped<IUserTypeRepository, UserTypeRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserTypeService, UserTypeService>();
+            services.AddScoped<IAddressService, AddressService>();
+            services.AddScoped<ICityService, CityService>();
+            services.AddScoped<ICityRepository, CityRepository>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<IAuthService, AuthService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,7 +65,7 @@ namespace UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Register}/{action=Index}/{id?}");
             });
         }
     }

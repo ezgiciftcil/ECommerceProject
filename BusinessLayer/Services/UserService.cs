@@ -4,6 +4,7 @@ using DataAccessLayer.Repositories.Interfaces;
 using EntityLayer;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BusinessLayer.Services
 {
@@ -51,6 +52,22 @@ namespace BusinessLayer.Services
         {
             userRepository.Update(user);
             return new Result(true, "User is updated.");
+        }
+
+        public Result IsUserEmailExist(string email)
+        {
+            var existResult= userRepository.GetAll().Any(user => user.Email==email);
+            if (existResult)
+            {
+                return new Result(true, "An account already created with this email.");
+            }
+            return new Result(false, "There is no any account created with this email.");
+        }
+
+        public DataResult<int> GetUserIdByEmail(string email)
+        {
+            var userId = userRepository.GetUserIdByEmail(email);
+            return new DataResult<int>(userId, !(userId==0));
         }
     }
 }
