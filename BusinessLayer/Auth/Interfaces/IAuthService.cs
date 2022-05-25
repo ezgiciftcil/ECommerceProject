@@ -7,5 +7,6 @@ namespace BusinessLayer.Auth.Interfaces
     {
         Result Register(NewAccountForm accountForm);
         Result Login(LoginForm loginForm);
+        int GetUserIdForSession(string Email);
     }
 }

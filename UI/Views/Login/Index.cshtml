@@ -1,5 +1,113 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model BusinessLayer.Auth.Models.LoginForm
 @{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>EBeauty - @ViewData["Title"]</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="~/css/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="~/css/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="~/css/adminlte.min.css">
+</head>
+
+<body>
+    <!-- Page Header Start -->
+    <div class="container-fluid bg-secondary mb-5">
+        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 200px">
+            <h1 class="font-weight-semi-bold mb-3">Sign in to your account and start shopping ASAP!</h1>
+            <div class="d-inline-flex">
+                <p class="m-0">Don't you have an account? You can create a new account by <a href="@Url.Action("Index", "Register")">clicking here.</a></p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row justify-content-center ">
+        <p class="m-0 font-weight-semi-bold ">Please enter your email and password to sign in :</p>
+    </div>
+
+    @if (@ViewBag.ErrorMessage != null)
+    {
+        <div class="row justify-content-center ">
+            <p class="text-danger">@ViewBag.ErrorMessage</p>
+
+        </div>
+    }
+
+
+    <div class="container-fluid pt-5">
+        <div class="row d-flex justify-content-center ">
+            <div class="col-lg-8">
+                <form action="@Url.Action("Index", "Login")" method="post">
+                    <div class="mb-4">
+                        <div class="row justify-content-center">
+
+                            <div class="col-md-6 form-group">
+                                <label>Email Address</label>
+                                <input asp-for="Email" class="form-control" type="email" placeholder="Enter your account's email.'">
+                            </div>
+                        </div>
+                        <div class="row justify-content-center ">
+                            <div class="col-md-6 form-group">
+                                <label>Password</label>
+                                <input asp-for="Password" class="form-control" type="password" placeholder="Enter your password.">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col align-self-center">
+                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/easing.min.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/adminlte.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="~/js/jqBootstrapValidation.min.js"></script>
+    <script src="~/js/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="~/js/main.js"></script>
+</body>
+
+</html>

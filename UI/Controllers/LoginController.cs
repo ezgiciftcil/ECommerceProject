@@ -1,15 +1,31 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using BusinessLayer.Auth.Interfaces;
+using BusinessLayer.Auth.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace UI.Controllers
 {
     public class LoginController : Controller
     {
+        private readonly IAuthService authService;
+        public LoginController(IAuthService _authService)
+        {
+            authService = _authService;
+        }
         public IActionResult Index()
         {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Index(LoginForm form)
+        {
+            var result = authService.Login(form);
+            if (result.Success)
+            {
+                HttpContext.Session.SetInt32(SessionService.SessionUserId, authService.GetUserIdForSession(form.Email));
+                return RedirectToAction("Index", "Home");
+            }
+            ViewBag.ErrorMessage = result.Message;
             return View();
         }
     }

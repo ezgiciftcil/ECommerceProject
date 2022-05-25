@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace UI.Controllers
 
         public IActionResult Index()
         {
+            var userId = Convert.ToInt32(HttpContext.Session.GetInt32(SessionService.SessionUserId));
             return View();
         }
 

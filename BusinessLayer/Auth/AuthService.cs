@@ -17,7 +17,11 @@ namespace BusinessLayer.Auth
         }
         public Result Login(LoginForm loginForm)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrEmpty(loginForm.Email) || (string.IsNullOrEmpty(loginForm.Password)))
+                return new Result(false, "The email or password is incorrect.");
+
+            var result = userService.IsPasswordCorrect(loginForm.Email, loginForm.Password);
+            return result;
         }
 
         public Result Register(NewAccountForm accountForm)
@@ -27,7 +31,7 @@ namespace BusinessLayer.Auth
 
             var isEmailExist = userService.IsUserEmailExist(accountForm.Email);
             if (isEmailExist.Success)
-                return isEmailExist;
+                return new Result(false,isEmailExist.Message);
 
             if (accountForm.Password != accountForm.PasswordRepeat)
                 return new Result(false, "Passwords are not matching !");
@@ -63,6 +67,10 @@ namespace BusinessLayer.Auth
                     return addAddressResult;
             }
             return addUserResult;
+        }
+        public int GetUserIdForSession(string Email)
+        {
+            return userService.GetUserIdByEmail(Email).Data;
         }
     }
 }

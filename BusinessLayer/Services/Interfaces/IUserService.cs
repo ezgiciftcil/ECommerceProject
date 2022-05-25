@@ -10,8 +10,9 @@ namespace BusinessLayer.Services.Interfaces
         Result DeleteUser(int userId);
         Result UpdateUser(User user);
         Result IsUserEmailExist(string email);
-        DataResult<int> GetUserIdByEmail(string Email);
+        DataResult<int> GetUserIdByEmail(string email);
         DataResult<List<User>> GetAllUserType();
-        DataResult<User> GetUserTypeById(int userId);
+        DataResult<User> GetUserById(int userId);
+        Result IsPasswordCorrect(string email, string password);
     }
 }

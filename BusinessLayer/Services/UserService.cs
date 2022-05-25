@@ -43,7 +43,7 @@ namespace BusinessLayer.Services
             return new DataResult<List<User>>(userRepository.GetAll(), true,"All users are listed.");
         }
 
-        public DataResult<User> GetUserTypeById(int userId)
+        public DataResult<User> GetUserById(int userId)
         {
             return new DataResult<User>(userRepository.GetById(userId), true, "User is listed.");
         }
@@ -68,6 +68,14 @@ namespace BusinessLayer.Services
         {
             var userId = userRepository.GetUserIdByEmail(email);
             return new DataResult<int>(userId, !(userId==0));
+        }
+
+        public Result IsPasswordCorrect(string email, string password)
+        {
+            var isCorrect = userRepository.GetAll().Any(user => user.Email == email && user.Password== password);
+            if (isCorrect)
+                return new Result(true, "Password and Email address is correct.");
+            return new Result(false, "The email or password is incorrect.");
         }
     }
 }
