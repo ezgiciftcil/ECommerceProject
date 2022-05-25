@@ -44,6 +44,12 @@ namespace UI
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IDiscountRepository, DiscountRepository>();
+            services.AddScoped<ICartRepository, CartRepository>();
+            services.AddScoped<ICartItemRepository, CartItemRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

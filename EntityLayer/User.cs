@@ -11,6 +11,8 @@ namespace EntityLayer
         {
             if (Addresses == null)
                 Addresses = new List<Address>();
+            if (Carts == null)
+                Carts = new List<Cart>();
         }
         public int UserId { get; set; }
         public UserType UserType { get; set; }
@@ -22,5 +24,6 @@ namespace EntityLayer
         public string PhoneNumber { get; set; }
         public DateTime CreatedDate { get; set; }
         public List<Address> Addresses { get; set; }
+        public List<Cart> Carts { get; set; }
     }
 }

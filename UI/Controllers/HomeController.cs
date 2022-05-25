@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using BusinessLayer.Services.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,11 +13,16 @@ namespace UI.Controllers
 {
     public class HomeController : Controller
     {
-
+        private readonly ICategoryService categoryService;
+        public HomeController(ICategoryService _categoryService)
+        {
+            categoryService = _categoryService;
+        }
         public IActionResult Index()
         {
-            var userId = Convert.ToInt32(HttpContext.Session.GetInt32(SessionService.SessionUserId));
-            return View();
+            var pageModel = new HomePageModel();
+            pageModel.Categories = categoryService.GetAllCategories().Data;
+            return View(pageModel);
         }
 
     }

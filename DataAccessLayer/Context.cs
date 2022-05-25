@@ -49,12 +49,62 @@ namespace DataAccessLayer
             addressBuilder.HasOne<City>(e => e.City)
             .WithMany(d => d.Addresses)
             .HasForeignKey(e => e.CityId);
+
+            var categoryBuilder = modelBuilder.Entity<Category>();
+            categoryBuilder.HasKey(e => new { e.CategoryId });
+            categoryBuilder.Property(e => e.CategoryId).ValueGeneratedOnAdd();
+            categoryBuilder.Property(e => e.CategoryName).IsRequired().HasMaxLength(50);
+
+            var productBuilder = modelBuilder.Entity<Product>();
+            productBuilder.HasKey(e => new { e.ProductId });
+            productBuilder.Property(e => e.ProductId).ValueGeneratedOnAdd();
+            productBuilder.Property(e => e.Description).IsRequired();
+            productBuilder.Property(e => e.ImageUrl).IsRequired();
+            productBuilder.Property(e => e.Price).IsRequired();
+            productBuilder.Property(e => e.Stock).IsRequired();
+            productBuilder.HasOne<Category>(e => e.Category)
+            .WithMany(d => d.Products)
+            .HasForeignKey(e => e.CategoryId);
+
+            var discountBuilder = modelBuilder.Entity<Discount>();
+            discountBuilder.HasKey(e => new { e.DiscountId });
+            discountBuilder.Property(e => e.DiscountId).ValueGeneratedOnAdd();
+            discountBuilder.Property(e => e.CreatedDate).IsRequired();
+            discountBuilder.Property(e => e.DiscountDescription).IsRequired().HasMaxLength(150);
+            discountBuilder.Property(e => e.IsActive).IsRequired();
+            discountBuilder.Property(e => e.LastDate).IsRequired();
+            discountBuilder.Property(e => e.DiscountPercent).IsRequired();
+            discountBuilder.HasOne<Product>(e => e.Product)
+            .WithMany(d => d.Discounts)
+            .HasForeignKey(e => e.ProductId);
+
+            var cartBuilder = modelBuilder.Entity<Cart>();
+            cartBuilder.HasKey(e => new { e.CartId });
+            cartBuilder.Property(e => e.CartId).ValueGeneratedOnAdd();
+            cartBuilder.HasOne<User>(e => e.User)
+            .WithMany(d => d.Carts)
+            .HasForeignKey(e => e.UserId);
+
+            var cartItemBuilder = modelBuilder.Entity<CartItem>();
+            cartItemBuilder.HasKey(e => new { e.CartItemId });
+            cartItemBuilder.Property(e => e.CartItemId).ValueGeneratedOnAdd();
+            cartItemBuilder.Property(e => e.AddedDate).IsRequired();
+            cartItemBuilder.HasOne<Cart>(e => e.Cart)
+            .WithMany(d => d.CartItems)
+            .HasForeignKey(e => e.CartItemId);
+            cartItemBuilder.HasOne<Product>(e => e.Product)
+            .WithMany(d => d.CartItems)
+            .HasForeignKey(e => e.ProductId);
         }
         
         public DbSet<UserType> UserTypes { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Address> Addresses { get; set; }
-
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Discount> Discounts { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
     }
 }
