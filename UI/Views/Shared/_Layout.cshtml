@@ -2,13 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>ECommerce - @ViewData["Title"]</title>
+    <title>EBeauty - @ViewData["Title"]</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -47,15 +49,15 @@
                         <a href="@Url.Action("Index","Home")" class="btn border">
                             <i class="fa fa-home text-primary"></i>
                         </a>
-                        <a href="" class="btn border">
+                        <a href="@Url.Action("UserTypeAdd","Test")" class="btn border">
                             <i class="fa fa-user text-primary"></i>
                             <span class="badge">My Profile</span>
                         </a>
-                        <a href="" class="btn border">
+                        <a href="@Url.Action("UserAdd","Logout")" class="btn border">
                             <i class="fas fa-heart text-primary"></i>
                             <span class="badge">Favorites</span>
                         </a>
-                        <a href="" class="btn border">
+                        <a href="@Url.Action("Index","Logout")" class="btn border">
                             <i class="fas fa-shopping-cart text-primary"></i>
                             <span class="badge">Card</span>
                         </a>
@@ -132,9 +134,7 @@
                 </div>
             </div>
         </div>
-        <script src="~/lib/jquery/dist/jquery.min.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+       
         @await RenderSectionAsync("Scripts", required: false)
     </body>
 </html>
