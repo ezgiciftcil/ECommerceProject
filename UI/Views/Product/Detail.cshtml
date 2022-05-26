@@ -1,0 +1,84 @@
+﻿@model ProductDetailModel
+@{
+    ViewData["Title"] = "Product Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    < <!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+<!-- Libraries Stylesheet -->
+<link href="~/css/owl.carousel.min.css" rel="stylesheet">
+
+<!-- Customized Bootstrap Stylesheet -->
+<link href="~/css/style.css" rel="stylesheet">
+
+<div class="container-fluid bg-secondary mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 200px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">@Model.Product.ProductName</h1>
+    </div>
+</div>
+
+<div class="container-fluid py-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-5 pb-5">
+            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner border">
+                    <div class="carousel-item active">
+                        <img class="w-100 h-100" src="@Url.Content(Model.Product.ImageUrl)" alt="Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-7 pb-5">
+            <h3 class="font-weight-semi-bold">@Model.Product.ProductName</h3>
+            <div class="d-flex mb-3">
+                <small class="pt-1">@Model.Product.Stock Products Left.</small>
+            </div>
+            <h3 class="font-weight-semi-bold mb-4">$@Model.Product.Price</h3>
+            <p class="mb-4">@Model.Product.Description</p>
+            
+            <div class="d-flex align-items-center mb-4 pt-2">
+                <div class="input-group quantity mr-3" style="width: 130px;">
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary btn-minus">
+                            <i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                    <input type="number" class="form-control bg-secondary text-center" value="1">
+                    <div class="input-group-btn">
+                        <button class="btn btn-primary btn-plus">
+                            <i class="fa fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+                <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+                <button class="btn btn-primary px-3"><i class="fas fa-heart mr-1"></i> Add To Wishing List</button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Shop Detail End -->
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="mail/jqBootstrapValidation.min.js"></script>
+<script src="mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>

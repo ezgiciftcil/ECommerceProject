@@ -26,7 +26,9 @@ namespace UI.Controllers
 
         public IActionResult Detail(int productId)
         {
-            return View();
+            var productDetail = new ProductDetailModel();
+            productDetail.Product=productService.GetProductById(productId).Data;
+            return View(productDetail);
         }
     }
 }

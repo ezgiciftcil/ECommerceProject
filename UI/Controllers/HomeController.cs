@@ -22,6 +22,7 @@ namespace UI.Controllers
         {
             var pageModel = new HomePageModel();
             pageModel.Categories = categoryService.GetAllCategories().Data;
+            pageModel.CategoryTotalProduct = categoryService.GetAllCategoriesTotalProductNumber().Data;
             return View(pageModel);
         }
 

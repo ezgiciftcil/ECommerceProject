@@ -9,5 +9,7 @@ namespace UI.Models
     public class HomePageModel
     {
         public List<Category> Categories { get; set; }
+        public IDictionary<int,int> CategoryTotalProduct { get; set; }
+       
     }
 }

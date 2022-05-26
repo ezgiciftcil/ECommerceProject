@@ -34,9 +34,8 @@ namespace BusinessLayer.Services
                 var counter = 0;
                 foreach (var product in totalProductsOfCategory)
                 {
-                    if (product.Stock == 0)
-                        continue;
-                    counter++;
+                    if (product.Stock != 0)
+                        counter++;
                 }
                 categoryProductNumber.Add(category.CategoryId, counter);
             }
