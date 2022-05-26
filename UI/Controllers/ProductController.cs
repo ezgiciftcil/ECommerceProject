@@ -8,9 +8,11 @@ namespace UI.Controllers
     public class ProductController : Controller
     {
         ICategoryService categoryService;
-        public ProductController(ICategoryService _categoryService)
+        IProductService productService;
+        public ProductController(ICategoryService _categoryService, IProductService _productService)
         {
             categoryService = _categoryService;
+            productService = _productService;
         }
         public IActionResult Index(int categoryId, string categoryName)
         {
@@ -18,7 +20,13 @@ namespace UI.Controllers
             productsOfCategory.Categories = categoryService.GetAllCategories().Data;
             productsOfCategory.CategoryId = categoryId;
             productsOfCategory.CategoryName = categoryName;
+            productsOfCategory.Products = productService.GetAvailableProductsByCategoryId(categoryId).Data;
             return View(productsOfCategory);
+        }
+
+        public IActionResult Detail(int productId)
+        {
+            return View();
         }
     }
 }

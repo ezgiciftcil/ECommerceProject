@@ -7,6 +7,6 @@ namespace BusinessLayer.Services.Interfaces
     public interface ICategoryService
     {
         DataResult<List<Category>> GetAllCategories();
-        DataResult<IDictionary<string,int>> GetAllCategoriesTotalProductNumber();
+        DataResult<IDictionary<int,int>> GetAllCategoriesTotalProductNumber();
     }
 }
