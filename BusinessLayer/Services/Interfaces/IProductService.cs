@@ -16,5 +16,6 @@ namespace BusinessLayer.Services.Interfaces
         DataResult<List<Product>> GetAvailableProductsByCategoryId(int CategoryId);
         DataResult<Product> GetProductById(int ProductId);
         DataResult<bool> CheckProductAvailable(int ProductId);
+        DataResult<bool> CheckProductQuantityIsOkForSale(int ProductId,int quantity);
     }
 }

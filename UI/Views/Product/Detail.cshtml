@@ -65,8 +65,8 @@
 
             <div class="d-flex align-items-center mb-4 pt-2">
                 <a href="@Url.Action("AddItemFromProductDetail", "WishList", new { productId = @Model.Product.ProductId})" class="btn btn-primary btn border "><i class="fas fa-heart mr-1"></i> Add To Wishing List</a>
-                <button class="btn btn-primary btn border "><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
-            </div>
+                <a href="@Url.Action("AddItemFromProductDetail", "Cart", new { productId = @Model.Product.ProductId})" class="btn btn-primary btn border "><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</a>
+</div>
         </div>
     </div>
 </div>

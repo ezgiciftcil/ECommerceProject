@@ -58,5 +58,12 @@ namespace BusinessLayer.Services.Interfaces
             var result = stock == 0 ? false : true;
             return new DataResult<bool>(result, true);
         }
+
+        public DataResult<bool> CheckProductQuantityIsOkForSale(int ProductId, int quantity)
+        {
+            var product = productRepository.GetById(ProductId);
+            var result = product.Stock >= quantity ? true : false;
+            return new DataResult<bool>(result, true, "Availabilty for sale is determined");
+        }
     }
 }

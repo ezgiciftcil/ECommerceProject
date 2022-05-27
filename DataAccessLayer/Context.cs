@@ -91,7 +91,7 @@ namespace DataAccessLayer
             cartItemBuilder.Property(e => e.AddedDate).IsRequired();
             cartItemBuilder.HasOne<Cart>(e => e.Cart)
             .WithMany(d => d.CartItems)
-            .HasForeignKey(e => e.CartItemId);
+            .HasForeignKey(e => e.CartId);
             cartItemBuilder.HasOne<Product>(e => e.Product)
             .WithMany(d => d.CartItems)
             .HasForeignKey(e => e.ProductId);
