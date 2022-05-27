@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.Utilities.Results;
 using EntityLayer;
+using System.Collections.Generic;
 
 namespace BusinessLayer.Services.Interfaces
 {
@@ -9,5 +10,7 @@ namespace BusinessLayer.Services.Interfaces
         DataResult<WishingList> GetWishListByUserId(int userId);
         Result AddProductToWishList(int userId, int productId);
         Result DeleteProductFromWishList(int userId, int productId);
+        DataResult<List<Product>> GetAvailableWishListProducts(int userId);
+        DataResult<bool> IsProductAlreadyAdded(int userId,int productId);
     }
 }

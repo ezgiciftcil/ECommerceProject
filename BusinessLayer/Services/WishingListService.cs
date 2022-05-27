@@ -3,6 +3,7 @@ using BusinessLayer.Utilities.Results;
 using DataAccessLayer.Repositories.Interfaces;
 using EntityLayer;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BusinessLayer.Services
@@ -21,6 +22,10 @@ namespace BusinessLayer.Services
 
         public Result AddProductToWishList(int userId, int productId)
         {
+            var isProductAlreadyAdded = IsProductAlreadyAdded(userId, productId);
+            if (isProductAlreadyAdded.Data)
+                return new Result(false, isProductAlreadyAdded.Message);
+
             var isProductAvailable = productService.CheckProductAvailable(productId).Data;
             if (!isProductAvailable)
                 return new Result(false, "Product is out of stock.");
@@ -58,6 +63,39 @@ namespace BusinessLayer.Services
         {
             var wishingList = wishingListRepository.GetAll().Where(m => m.UserId == userId).FirstOrDefault();
             return new DataResult<WishingList>(wishingList, true, "Wishing List is listed for userId");
+        }
+
+        public DataResult<List<Product>> GetAvailableWishListProducts(int userId)
+        {
+            var wishList = GetWishListByUserId(userId).Data;
+            var listItemsOfUser = listItemRepository.GetAll().Where(e => e.WishingListId == wishList.WishingListId);
+            var products = new List<Product>();
+            foreach (var item in listItemsOfUser)
+            {
+                var productId = item.ProductId;
+                var isProductHaveStock = productService.CheckProductAvailable(productId).Data;
+                
+                if (isProductHaveStock)
+                {
+                    var productToAdd = productService.GetProductById(productId).Data;
+                    products.Add(productToAdd);
+                }
+            }
+            return new DataResult<List<Product>>(products, true, "Available Products of Wishing List are Listed");
+        }
+
+        public DataResult<bool> IsProductAlreadyAdded(int userId,int productId)
+        {
+            var wishList = GetWishListByUserId(userId).Data;
+            var listItemsOfUser = listItemRepository.GetAll().Where(e => e.WishingListId == wishList.WishingListId);
+            foreach (var item in listItemsOfUser)
+            {
+                if (item.ProductId == productId)
+                {
+                    return new DataResult<bool>(true, true, "Product is already in your wishing list.");
+                }
+            }
+            return new DataResult<bool>(false, true, "Product is not in your wishing list.");
         }
     }
 }

@@ -33,8 +33,13 @@ namespace UI.Controllers
             return View(productsOfCategory);
         }
 
-        public IActionResult Detail(int productId)
+        public IActionResult Detail(int productId, bool isSucceed = true, string message = null)
         {
+            if (!string.IsNullOrEmpty(message))
+            {
+                ViewBag.Message = message;
+                ViewBag.IsSucceed = isSucceed;
+            }
             var productDetail = new ProductDetailModel();
             productDetail.Product=productService.GetProductById(productId).Data;
             return View(productDetail);

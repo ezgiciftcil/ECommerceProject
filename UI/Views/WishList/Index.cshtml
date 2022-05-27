@@ -1,4 +1,5 @@
-﻿@{
+﻿@model WishListModel
+@{
     ViewData["Title"] = "My Wishing List";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -21,6 +22,26 @@
         </div>
     </div>
 
+    @if (ViewBag.Message != null)
+    {
+        <div class="row justify-content-center ">
+            @{ if (ViewBag.IsSucceed)
+                {
+                    {
+                        <p class="m-0 font-weight-semi-bold text-success">@ViewBag.Message</p>
+                    }
+                }
+                else
+                {
+                    {
+                        <p class="m-0 font-weight-semi-bold text-danger">@ViewBag.Message</p>
+                    }
+                }
+
+            }
+        </div>
+    }
+
     <div class="container-fluid pt-5">
         <div class="row d-flex justify-content-center ">
 
@@ -37,18 +58,19 @@
                     </thead>
 
                     <tbody class="align-middle">
-
-                        <tr>
-                            <td class="align-middle"><img src="~/newringsarrived.jpg" alt="" style="width: 50px;"> Colorful Stylish Shirt</td>
-                            <td class="align-middle">$150</td>
-                            <td class="align-middle">
+                        @foreach (var product in Model.Products)
+                        {
+                            <tr>
+                                <td class="align-middle"><img src="@Url.Content(product.ImageUrl)" alt="" style="width: 50px;"><a href="@Url.Action("Detail", "Product", new { productId=product.ProductId})">@product.ProductName</a></td>
+                                <td class="align-middle">@product.Price</td>
+                                <td class="align-middle">
                                     <div class="input-group-btn">
                                         <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
                                     </div>
-                            </td>
-                            <td class="align-middle"><button class="btn btn-sm btn-primary"><i class="fa fa-times"></i></button></td>
-                        </tr>
-
+                                </td>
+                                <td class="align-middle"><a href="@Url.Action("RemoveItemFromList", "WishList", new { productId=product.ProductId})" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></a></td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>

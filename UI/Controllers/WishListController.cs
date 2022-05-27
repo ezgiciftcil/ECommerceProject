@@ -18,13 +18,27 @@ namespace UI.Controllers
             wishListService = _wishListService;
             categoryService = _categoryService;
         }
-        public IActionResult Index()
+        public IActionResult Index(bool isSucceed=true, string message=null)
         {
+            if (!string.IsNullOrEmpty(message))
+            {
+                ViewBag.Message = message;
+                ViewBag.IsSucceed = isSucceed;
+            }
             var userId = Convert.ToInt32(HttpContext.Session.GetInt32(SessionService.SessionUserId));
             if(userId==0)
                 return RedirectToAction("Index", "Login",new { Message="You need to login before looking your wish list."});
             var model = new WishListModel();
-            return View();
+            model.Products = wishListService.GetAvailableWishListProducts(userId).Data;
+            return View(model);
+        }
+        public IActionResult RemoveItemFromList(int productId)
+        {
+            var userId = Convert.ToInt32(HttpContext.Session.GetInt32(SessionService.SessionUserId));
+            if (userId == 0)
+                return RedirectToAction("Index", "Login", new { Message = $"You need to login before view this wish list page." });
+            var result = wishListService.DeleteProductFromWishList(userId, productId);
+            return RedirectToAction("Index", "WishList", new { isSucceed = result.Success, message = result.Message });
         }
 
         public IActionResult AddItemFromCategory(int productId)
@@ -37,5 +51,13 @@ namespace UI.Controllers
             return RedirectToAction("Index", "Product", new { categoryId = category.CategoryId, categoryName = category.CategoryName, isSucceed = result.Success, message = result.Message });
         }
 
+        public IActionResult AddItemFromProductDetail(int productId)
+        {
+            var userId = Convert.ToInt32(HttpContext.Session.GetInt32(SessionService.SessionUserId));
+            if (userId == 0)
+                return RedirectToAction("Index", "Login", new { Message = $"You need to login before adding item your wish list." });
+            var result = wishListService.AddProductToWishList(userId, productId);
+            return RedirectToAction("Detail", "Product", new { productId=productId, isSucceed = result.Success, message = result.Message });
+        }
     }
 }
