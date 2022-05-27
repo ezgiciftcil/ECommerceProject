@@ -13,11 +13,13 @@ namespace BusinessLayer.Services
         private readonly IWishingListRepository wishingListRepository;
         private readonly IWishingListItemRepository listItemRepository;
         private readonly IProductService productService;
-        public WishingListService(IWishingListRepository _wishingListRepository, IWishingListItemRepository _listItemRepository, IProductService _productService)
+        private readonly ICartService cartService;
+        public WishingListService(IWishingListRepository _wishingListRepository, IWishingListItemRepository _listItemRepository, IProductService _productService, ICartService _cartService)
         {
             wishingListRepository = _wishingListRepository;
             listItemRepository = _listItemRepository;
             productService = _productService;
+            cartService = _cartService;
         }
 
         public Result AddProductToWishList(int userId, int productId)
@@ -96,6 +98,15 @@ namespace BusinessLayer.Services
                 }
             }
             return new DataResult<bool>(false, true, "Product is not in your wishing list.");
+        }
+
+        public Result AddProductToCart(int userId, int productId)
+        {
+            var isProductAvailable = productService.CheckProductAvailable(productId);
+            if (!isProductAvailable.Success)
+                return new Result(false, "Product is out of stock.");
+            var addResult=cartService.AddProductToCart(userId, productId);
+            return addResult;
         }
     }
 }

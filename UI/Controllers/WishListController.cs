@@ -59,5 +59,14 @@ namespace UI.Controllers
             var result = wishListService.AddProductToWishList(userId, productId);
             return RedirectToAction("Detail", "Product", new { productId=productId, isSucceed = result.Success, message = result.Message });
         }
+
+        public IActionResult AddItemToCart(int productId)
+        {
+            var userId = Convert.ToInt32(HttpContext.Session.GetInt32(SessionService.SessionUserId));
+            if (userId == 0)
+                return RedirectToAction("Index", "Login", new { Message = $"You need to login before adding item your wish list." });
+            var result = wishListService.AddProductToCart(userId, productId);
+            return RedirectToAction("Index", "WishList", new { isSucceed = result.Success, message = result.Message });
+        }
     }
 }

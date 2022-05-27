@@ -43,7 +43,7 @@ namespace BusinessLayer.Services
                 ProductId = productId
             };
             cartItemRepository.Add(itemToAdd);
-            return new Result(true, "Item added to the card.");
+            return new Result(true, "Product added to the card.");
         }
 
         public DataResult<List<Product>> GetAvailableCartProducts(int userId)
