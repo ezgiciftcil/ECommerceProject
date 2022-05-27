@@ -25,8 +25,26 @@
         <h1 class="font-weight-semi-bold text-uppercase mb-3">@Model.CategoryName</h1>
     </div>
 </div>
-<!-- Page Header End -->
-<!-- Shop Start -->
+
+@if (ViewBag.Message != null)
+{
+    <div class="row justify-content-center ">
+        @{ if (ViewBag.IsSucceed)
+            {
+                {
+                    <p class="m-0 font-weight-semi-bold text-success">@ViewBag.Message</p>
+                }
+            }
+            else
+            {
+                {
+    <p class="m-0 font-weight-semi-bold text-danger">@ViewBag.Message</p>
+                }
+            }
+
+        }
+    </div>
+}
 <div class="container-fluid pt-5">
     <div class="row px-xl-5">
         <!-- Shop Sidebar Start -->
@@ -64,7 +82,7 @@
                                 </div>
                             </div>
                             <div class="card-footer d-flex justify-content-between bg-light border">
-                                <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-heart text-primary mr-1"></i>Add Wishlist</a>
+                                <a href="@Url.Action("AddItemFromCategory", "WishList", new { productId = product.ProductId})" class="btn btn-sm text-dark p-0"><i class="fas fa-heart text-primary mr-1"></i>Add Wishlist</a>
                                 <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
                             </div>
                         </div>

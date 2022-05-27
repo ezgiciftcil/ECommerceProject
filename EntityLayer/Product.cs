@@ -14,6 +14,8 @@ namespace EntityLayer
                 Discounts = new List<Discount>();
             if (CartItems == null)
                 CartItems = new List<CartItem>();
+            if (WishingListItems == null)
+                WishingListItems = new List<WishingListItem>();
         }
         public int ProductId { get; set; }
         public int CategoryId { get; set; }
@@ -25,5 +27,6 @@ namespace EntityLayer
         public string ImageUrl { get; set; }
         public List<Discount> Discounts { get; set; }
         public List<CartItem> CartItems { get; set; }
+        public List<WishingListItem> WishingListItems { get; set; }
     }
 }

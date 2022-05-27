@@ -13,6 +13,8 @@ namespace EntityLayer
                 Addresses = new List<Address>();
             if (Carts == null)
                 Carts = new List<Cart>();
+            if (WishingLists == null)
+                WishingLists = new List<WishingList>();
         }
         public int UserId { get; set; }
         public UserType UserType { get; set; }
@@ -25,5 +27,6 @@ namespace EntityLayer
         public DateTime CreatedDate { get; set; }
         public List<Address> Addresses { get; set; }
         public List<Cart> Carts { get; set; }
+        public List<WishingList> WishingLists { get; set; }
     }
 }

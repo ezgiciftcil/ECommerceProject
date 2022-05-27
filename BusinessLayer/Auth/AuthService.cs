@@ -25,7 +25,7 @@ namespace BusinessLayer.Auth
         }
 
         public Result Register(NewAccountForm accountForm)
-        {
+       {
             if (string.IsNullOrEmpty(accountForm.Email))
                 return new Result(false, "Email must be filled !");
 
@@ -65,6 +65,17 @@ namespace BusinessLayer.Auth
                 var addAddressResult= addressService.AddAddress(newAddress);
                 if (!addAddressResult.Success)
                     return addAddressResult;
+            }
+
+            if (addUserResult.Success)
+            {
+                var findUserId = userService.GetUserIdByEmail(accountForm.Email).Data;
+                var result = userService.AddUserCartAndWishList(findUserId);
+                if (!result.Success)
+                {
+                    return result;
+                }
+
             }
             return addUserResult;
         }

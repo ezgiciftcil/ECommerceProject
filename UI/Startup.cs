@@ -50,7 +50,11 @@ namespace UI
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IDiscountRepository, DiscountRepository>();
             services.AddScoped<ICartRepository, CartRepository>();
+            services.AddScoped<ICartService, CartService>();
             services.AddScoped<ICartItemRepository, CartItemRepository>();
+            services.AddScoped<IWishingListRepository, WishingListRepository>();
+            services.AddScoped<IWishingListService, WishingListService>();
+            services.AddScoped<IWishingListItemRepository, WishingListItemRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

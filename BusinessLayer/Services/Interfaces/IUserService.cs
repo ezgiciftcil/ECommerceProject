@@ -14,5 +14,6 @@ namespace BusinessLayer.Services.Interfaces
         DataResult<List<User>> GetAllUserType();
         DataResult<User> GetUserById(int userId);
         Result IsPasswordCorrect(string email, string password);
+        Result AddUserCartAndWishList(int userId);
     }
 }

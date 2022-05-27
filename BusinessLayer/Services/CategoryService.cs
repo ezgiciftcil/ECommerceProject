@@ -41,5 +41,12 @@ namespace BusinessLayer.Services
             }
             return new DataResult<IDictionary<int, int>>(categoryProductNumber, true, "Products number of each category is listed.");
         }
+
+       public DataResult<Category> GetCategoryByProductId(int productId)
+        {
+            var categoryId = productService.GetProductById(productId).Data.CategoryId;
+            var category = categoryRepository.GetById(categoryId);
+            return new DataResult<Category>(category, true, "Category is finded by product id");
+        }
     }
 }

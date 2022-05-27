@@ -95,6 +95,23 @@ namespace DataAccessLayer
             cartItemBuilder.HasOne<Product>(e => e.Product)
             .WithMany(d => d.CartItems)
             .HasForeignKey(e => e.ProductId);
+
+            var wishingListBuilder = modelBuilder.Entity<WishingList>();
+            wishingListBuilder.HasKey(e => new { e.WishingListId });
+            wishingListBuilder.Property(e => e.WishingListId).ValueGeneratedOnAdd();
+            wishingListBuilder.HasOne<User>(e => e.User)
+            .WithMany(d => d.WishingLists)
+            .HasForeignKey(e => e.UserId);
+
+            var wishingListItemBuilder = modelBuilder.Entity<WishingListItem>();
+            wishingListItemBuilder.HasKey(e => new { e.WishingListItemId });
+            wishingListItemBuilder.Property(e => e.WishingListItemId).ValueGeneratedOnAdd();
+            wishingListItemBuilder.HasOne<Product>(e => e.Product)
+            .WithMany(d => d.WishingListItems)
+            .HasForeignKey(e => e.ProductId);
+            wishingListItemBuilder.HasOne<WishingList>(e => e.WishingList)
+            .WithMany(d => d.WishingListItems)
+            .HasForeignKey(e => e.WishingListId);
         }
         
         public DbSet<UserType> UserTypes { get; set; }
@@ -106,5 +123,7 @@ namespace DataAccessLayer
         public DbSet<Discount> Discounts { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<WishingList> WishingLists { get; set; }
+        public DbSet<WishingListItem> WishingListItems { get; set; }
     }
 }

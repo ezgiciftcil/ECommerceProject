@@ -1,6 +1,8 @@
 ﻿using BusinessLayer.Services.Interfaces;
 using EntityLayer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using UI.Models;
 
 namespace UI.Controllers
@@ -9,13 +11,20 @@ namespace UI.Controllers
     {
         ICategoryService categoryService;
         IProductService productService;
-        public ProductController(ICategoryService _categoryService, IProductService _productService)
+        IWishingListService wishingListService;
+        public ProductController(ICategoryService _categoryService, IProductService _productService, IWishingListService _wishingListService)
         {
             categoryService = _categoryService;
             productService = _productService;
+            wishingListService = _wishingListService;
         }
-        public IActionResult Index(int categoryId, string categoryName)
+        public IActionResult Index(int categoryId, string categoryName, bool isSucceed=true, string message=null)
         {
+            if (!string.IsNullOrEmpty(message))
+            {
+                ViewBag.Message = message;
+                ViewBag.IsSucceed = isSucceed;
+            }
             var productsOfCategory = new ProductsOfCategoryModel();
             productsOfCategory.Categories = categoryService.GetAllCategories().Data;
             productsOfCategory.CategoryId = categoryId;
@@ -30,5 +39,6 @@ namespace UI.Controllers
             productDetail.Product=productService.GetProductById(productId).Data;
             return View(productDetail);
         }
+
     }
 }

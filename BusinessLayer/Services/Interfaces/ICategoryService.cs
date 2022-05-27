@@ -8,5 +8,6 @@ namespace BusinessLayer.Services.Interfaces
     {
         DataResult<List<Category>> GetAllCategories();
         DataResult<IDictionary<int,int>> GetAllCategoriesTotalProductNumber();
+        DataResult<Category> GetCategoryByProductId(int productId);
     }
 }

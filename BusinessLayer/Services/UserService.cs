@@ -11,9 +11,13 @@ namespace BusinessLayer.Services
     public class UserService:IUserService
     {
         private readonly IUserRepository userRepository;
-        public UserService(IUserRepository _userRepository)
+        private readonly IWishingListService wishingListService;
+        private readonly ICartService cartService;
+        public UserService(IUserRepository _userRepository, IWishingListService _wishingListService, ICartService _cartService)
         {
             userRepository = _userRepository;
+            wishingListService = _wishingListService;
+            cartService = _cartService;
         }
 
         public Result AddUser(User user)
@@ -76,6 +80,15 @@ namespace BusinessLayer.Services
             if (isCorrect)
                 return new Result(true, "Password and Email address is correct.");
             return new Result(false, "The email or password is incorrect.");
+        }
+
+        public Result AddUserCartAndWishList(int userId)
+        {
+            var resultOfWishList = wishingListService.AddWishListForUser(userId);
+            var resultOfCart = cartService.AddCartForUser(userId);
+            if (resultOfWishList.Success && resultOfCart.Success)
+                return new Result(true, "User Cart and Wishing Lists are created");
+            return new Result(true, "Error Occured");
         }
     }
 }

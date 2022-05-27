@@ -12,8 +12,9 @@ namespace UI.Controllers
         {
             authService = _authService;
         }
-        public IActionResult Index()
+        public IActionResult Index(string Message=null)
         {
+            ViewBag.ErrorMessage = Message;
             return View();
         }
         [HttpPost]

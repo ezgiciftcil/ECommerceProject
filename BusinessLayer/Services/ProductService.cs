@@ -51,5 +51,12 @@ namespace BusinessLayer.Services.Interfaces
             var product = productRepository.GetById(ProductId);
             return new DataResult<Product>(product, true, "Product is listed by product id.");
         }
+
+        public DataResult<bool> CheckProductAvailable(int ProductId)
+        {
+            var stock = GetProductStockById(ProductId).Data;
+            var result = stock == 0 ? false : true;
+            return new DataResult<bool>(result, true);
+        }
     }
 }
