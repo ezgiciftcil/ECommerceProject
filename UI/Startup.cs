@@ -56,6 +56,7 @@ namespace UI
             services.AddScoped<IWishingListService, WishingListService>();
             services.AddScoped<IWishingListItemRepository, WishingListItemRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IStatusRepository, StatusRepository>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IOrderAddressRepository, OrderAddressRepository>();
             services.AddScoped<IOrderItemRepository, OrderItemRepository>();

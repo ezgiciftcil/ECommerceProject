@@ -17,5 +17,7 @@ namespace BusinessLayer.Services.Interfaces
         Result CreateNewOrderForUser(int userId, string guid,decimal totalAmount);
         DataResult<Order> GetOrderByOrderGuid(string orderGuid);
         Result AddProductToOrder(List<CartProduct> products,int orderId);
+        DataResult<List<UserOrder>> GetAllUserOrderToPage(int userId);
+        DataResult<List<Order>> GetAllUserOrder(int userId);
     }
 }

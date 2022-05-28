@@ -14,12 +14,14 @@ namespace BusinessLayer.Services
         private readonly IOrderItemRepository itemRepository;
         private readonly IOrderRepository orderRepository;
         private readonly ICartService cartService;
-        public OrderService(IOrderAddressRepository _addressRepository, IOrderItemRepository _itemRepository, IOrderRepository _orderRepository, ICartService _cartService)
+        private readonly IStatusRepository statusRepository;
+        public OrderService(IOrderAddressRepository _addressRepository, IOrderItemRepository _itemRepository, IOrderRepository _orderRepository, ICartService _cartService, IStatusRepository _statusRepository)
         {
             addressRepository = _addressRepository;
             itemRepository = _itemRepository;
             orderRepository = _orderRepository;
             cartService = _cartService;
+            statusRepository = _statusRepository;
         }
 
         public DataResult<string> CreateGuidForOrder()
@@ -105,6 +107,25 @@ namespace BusinessLayer.Services
                 itemRepository.Add(item);
             }
             return new Result(true, "Products added to the order.");
+        }
+
+        public DataResult<List<UserOrder>> GetAllUserOrderToPage(int userId)
+        {
+            var orders = GetAllUserOrder(userId).Data;
+            var pageList = new List<UserOrder>();
+            foreach (var order in orders)
+            {
+                var status= statusRepository.GetById(order.StatusId);
+                var pageItem = new UserOrder(order, status);
+                pageList.Add(pageItem);
+            }
+            return new DataResult<List<UserOrder>>(pageList, true);
+        }
+
+        public DataResult<List<Order>> GetAllUserOrder(int userId)
+        {
+            var orders = orderRepository.GetAll().Where(e => e.UserId == userId).ToList();
+            return new DataResult<List<Order>>(orders, true);
         }
     }
 }
