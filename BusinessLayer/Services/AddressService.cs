@@ -3,6 +3,7 @@ using BusinessLayer.Utilities.Results;
 using DataAccessLayer.Repositories.Interfaces;
 using EntityLayer;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BusinessLayer.Services
 {
@@ -43,6 +44,24 @@ namespace BusinessLayer.Services
         public DataResult<List<Address>> GetAllAddress()
         {
             return new DataResult<List<Address>>(addressRepository.GetAll(), true, "Addresses are listed.");
+        }
+
+        public DataResult<Address> GetUserDefaultAddress(int userId)
+        {
+            var isUserHasDefaultAddress = IsUserHasDefaultAddress(userId);
+            if (isUserHasDefaultAddress.Data)
+            {
+                var address = addressRepository.GetAll().Where(e => e.UserId == userId).FirstOrDefault();
+                return new DataResult<Address>(address, true, "Default address is founded.");
+            }
+            return new DataResult<Address>(null, false, "Default address can not be founded.");
+        }
+
+        public DataResult<bool> IsUserHasDefaultAddress(int userId)
+        {
+            var address = addressRepository.GetAll().Count(e => e.UserId == userId);
+            var result = address > 0;
+            return new DataResult<bool>(result, true);
         }
 
         public Result UpdateAddress(Address address)

@@ -11,5 +11,7 @@ namespace BusinessLayer.Services.Interfaces
         Result UpdateAddress(Address address);
         DataResult<List<Address>> GetAllAddress();
         DataResult<Address> GetAddressById(int addressId);
+        DataResult<bool> IsUserHasDefaultAddress(int userId);
+        DataResult<Address> GetUserDefaultAddress(int userId);
     }
 }
