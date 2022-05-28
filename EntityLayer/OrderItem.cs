@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer
 {
-    public class OrderItem
+    public class OrderItem:IEntity
     {
         public int OrderItemId { get; set; }
         public int OrderId { get; set; }

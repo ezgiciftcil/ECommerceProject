@@ -6,7 +6,7 @@ namespace DataAccessLayer
 {
     public class Context : DbContext
     {
-        
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@"server=.; database=ECommerceDb; integrated security=true;");
@@ -14,7 +14,7 @@ namespace DataAccessLayer
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var userTypeBuilder=modelBuilder.Entity<UserType>();
+            var userTypeBuilder = modelBuilder.Entity<UserType>();
             userTypeBuilder.HasKey(e => new { e.UserTypeId });
             userTypeBuilder.Property(e => e.UserTypeId).ValueGeneratedOnAdd();
             userTypeBuilder.Property(e => e.TypeName).IsRequired().HasMaxLength(20);
@@ -112,8 +112,48 @@ namespace DataAccessLayer
             wishingListItemBuilder.HasOne<WishingList>(e => e.WishingList)
             .WithMany(d => d.WishingListItems)
             .HasForeignKey(e => e.WishingListId);
+
+            var orderStatusBuilder = modelBuilder.Entity<OrderStatus>();
+            orderStatusBuilder.HasKey(e => new { e.StatusId });
+            orderStatusBuilder.Property(e => e.StatusId).ValueGeneratedOnAdd();
+            orderStatusBuilder.Property(e => e.StatusDesc).IsRequired().HasMaxLength(25);
+
+            var orderAddressBuilder = modelBuilder.Entity<OrderAddress>();
+            orderAddressBuilder.HasKey(e => new { e.AddressId });
+            orderAddressBuilder.Property(e => e.AddressId).ValueGeneratedOnAdd();
+            orderAddressBuilder.Property(e => e.AddressDescription).IsRequired();
+            orderAddressBuilder.Property(e => e.PostCode).IsRequired();
+            orderAddressBuilder.Property(e => e.Street).IsRequired().HasMaxLength(70);
+            orderAddressBuilder.Property(e => e.Country).IsRequired();
+            orderAddressBuilder.HasOne<City>(e => e.City)
+            .WithMany(d => d.OrderAddresses)
+            .HasForeignKey(e => e.CityId);
+
+            var orderBuilder = modelBuilder.Entity<Order>();
+            orderBuilder.HasKey(e => new { e.OrderId });
+            orderBuilder.Property(e => e.OrderId).ValueGeneratedOnAdd();
+            orderBuilder.Property(e => e.CreateDate).IsRequired();
+            orderBuilder.Property(e => e.TotalAmount).IsRequired();
+            orderBuilder.HasOne<OrderStatus>(e => e.Status)
+            .WithMany(d => d.Orders)
+            .HasForeignKey(e => e.StatusId);
+            orderBuilder.HasOne<OrderAddress>(e => e.OrderAddress)
+            .WithMany(d => d.Orders)
+            .HasForeignKey(e => e.OrderAddressId);
+            orderBuilder.HasOne<User>(e => e.User)
+            .WithMany(d => d.Orders)
+            .HasForeignKey(e => e.UserId);
+
+            var orderItemBuilder = modelBuilder.Entity<OrderItem>();
+            orderItemBuilder.HasKey(e => new { e.OrderItemId });
+            orderItemBuilder.Property(e => e.OrderItemId).ValueGeneratedOnAdd();
+            orderItemBuilder.Property(e => e.Amount).IsRequired();
+            orderItemBuilder.Property(e => e.Quantity).IsRequired();
+            orderItemBuilder.HasOne<Order>(e => e.Order)
+            .WithMany(d => d.OrderItems)
+            .HasForeignKey(e => e.OrderId);
         }
-        
+
         public DbSet<UserType> UserTypes { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<City> Cities { get; set; }
@@ -125,5 +165,9 @@ namespace DataAccessLayer
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<WishingList> WishingLists { get; set; }
         public DbSet<WishingListItem> WishingListItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderStatus> OrderStatuses { get; set; }
+        public DbSet<OrderAddress> OrderAddresses { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
     }
 }

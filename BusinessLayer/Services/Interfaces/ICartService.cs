@@ -15,5 +15,6 @@ namespace BusinessLayer.Services.Interfaces
         DataResult<decimal> ProductTotalPrice(int quantity, decimal price);
         DataResult<decimal> TotalPriceOfCart(List<decimal> productsPrice);
         DataResult<List<CartProduct>> GetCartProductsProductsToPage(int userId);
+        Result RemovePurchasedProductsFromCart(List<CartProduct> products, int userId);
     }
 }

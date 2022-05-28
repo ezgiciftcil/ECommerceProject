@@ -55,6 +55,10 @@ namespace UI
             services.AddScoped<IWishingListRepository, WishingListRepository>();
             services.AddScoped<IWishingListService, WishingListService>();
             services.AddScoped<IWishingListItemRepository, WishingListItemRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IOrderAddressRepository, OrderAddressRepository>();
+            services.AddScoped<IOrderItemRepository, OrderItemRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

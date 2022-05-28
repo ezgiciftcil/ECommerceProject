@@ -134,5 +134,21 @@ namespace BusinessLayer.Services
             }
             return new DataResult<decimal>(sum, true);
         }
+
+        public Result RemovePurchasedProductsFromCart(List<CartProduct> products, int userId)
+        {
+            var cartId = GetCartByUserId(userId).Data.CartId;
+            foreach (var product in products)
+            {
+                var productId = product.ProductId;
+                var cartItems = cartItemRepository.GetAll().Where(e => e.CartId == cartId && e.ProductId == productId).ToList();
+                foreach (var item in cartItems)
+                {
+                    cartItemRepository.Delete(item);
+                    var decreaseStock = productService.DecreaseProductStock(product.Quantity,productId);
+                }
+            }
+            return new Result(true, "Items are removed from cart.");
+        }
     }
 }

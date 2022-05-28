@@ -65,5 +65,16 @@ namespace BusinessLayer.Services.Interfaces
             var result = product.Stock >= quantity ? true : false;
             return new DataResult<bool>(result, true, "Availabilty for sale is determined");
         }
+
+        public Result DecreaseProductStock(int stock, int productId)
+        {
+            var product = GetProductById(productId).Data;
+            if(product.Stock >= stock)
+            {
+                product.Stock -= stock;
+            }
+            productRepository.Update(product);
+            return new Result(true);
+        }
     }
 }

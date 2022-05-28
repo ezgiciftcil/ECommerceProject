@@ -5,8 +5,15 @@ namespace EntityLayer
 {
     public class Order : IEntity
     {
+        public Order()
+        {
+            if (OrderItems == null)
+                OrderItems = new List<OrderItem>();
+        }
         public int OrderId { get; set; }
         public decimal TotalAmount { get; set; }
+        public bool isPaymentSuceed { get; set; }
+        public string OrderGuid { get; set; }
         public DateTime CreateDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public List<OrderItem> OrderItems { get; set; }
