@@ -5,147 +5,117 @@
 }
 
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- Google Web Fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- Font Awesome -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+<!-- Libraries Stylesheet -->
+<link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+<!-- Customized Bootstrap Stylesheet -->
+<link href="css/style.css" rel="stylesheet">
 
 
-    <div class="container-fluid bg-secondary mb-5">
-        <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-            <h1 class="font-weight-semi-bold text-uppercase mb-3">Checkout</h1>
-        </div>
+<div class="container-fluid bg-secondary mb-5">
+    <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+        <h1 class="font-weight-semi-bold text-uppercase mb-3">Checkout</h1>
     </div>
+</div>
 
-    Kayıtlı Adresimi Kullanmak İstiyorum (adress null gelmezse)
+@{
+    if (Model.IsDefaultAddressExists)
+    {
+        <div class="row justify-content-center ">
+            <p class="m-0 font-weight-semi-bold text-dark">If you want to place your order at a different location than your default address, you can change your address below.</p>
+        </div>
+    }
+    else
+    {
+        <div class="row justify-content-center ">
+            <p class="m-0 font-weight-semi-bold text-dark">
+                Your default address is not found, please enter an address for delivery information.
+            </p>
+        </div>
+    }
+}
+<form action="@Url.Action("Checkout", "Order")" method="post">
     <div class="container-fluid pt-5">
         <div class="row px-xl-5">
 
-
-            <div class="col-lg-8">
-                <div class="mb-4">
-                    <h4 class="font-weight-semi-bold mb-4">Shipping Address</h4>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label>First Name</label>
-                            <input class="form-control" type="text" placeholder="John">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Last Name</label>
-                            <input class="form-control" type="text" placeholder="Doe">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>E-mail</label>
-                            <input class="form-control" type="text" placeholder="example@email.com">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Mobile No</label>
-                            <input class="form-control" type="text" placeholder="+123 456 789">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Address Line 1</label>
-                            <input class="form-control" type="text" placeholder="123 Street">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Address Line 2</label>
-                            <input class="form-control" type="text" placeholder="123 Street">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Country</label>
-                            <select class="custom-select">
-                                <option selected>United States</option>
-                                <option>Afghanistan</option>
-                                <option>Albania</option>
-                                <option>Algeria</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>City</label>
-                            <input class="form-control" type="text" placeholder="New York">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>State</label>
-                            <input class="form-control" type="text" placeholder="New York">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>ZIP Code</label>
-                            <input class="form-control" type="text" placeholder="123">
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="newaccount">
-                                <label class="custom-control-label" for="newaccount">Create an account</label>
-                            </div>
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="shipto">
-                                <label class="custom-control-label" for="shipto" data-toggle="collapse" data-target="#shipping-address">Ship to different address</label>
+            @{
+                if (Model.IsDefaultAddressExists)
+                {
+                    <div class="col-lg-8">
+                        <div class="mb-4">
+                            <h4 class="font-weight-semi-bold mb-4">Shipping Address</h4>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label>Country</label>
+                                    <select asp-for="Address.Country" value="@Model.Address.Country" class="custom-select">
+                                        <option selected>Turkey</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>City</label>
+                                    <select asp-items="@ViewBag.cities" asp-for="Address.CityId" value="@Model.Address.CityId" style="width: 100%" class="form-control select2-">
+                                        <option disabled selected hidden>Select City</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Street</label>
+                                    <input asp-for="Address.Street" value="@Model.Address.Street" class="form-control" type="text" placeholder="Street">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Postal Code</label>
+                                    <input asp-for="Address.PostCode" value="@Model.Address.PostCode" class="form-control" type="text" placeholder="Postal Code">
+                                </div>
+                                <div class="col align-self-center form-group">
+                                    <label>Address Description</label>
+                                    <input asp-for="Address.AddressDescription" value="@Model.Address.AddressDescription" class="form-control" type="text" placeholder="Please write your full address correctly.">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="collapse mb-4" id="shipping-address">
-                    <h4 class="font-weight-semi-bold mb-4">Shipping Address</h4>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label>First Name</label>
-                            <input class="form-control" type="text" placeholder="John">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Last Name</label>
-                            <input class="form-control" type="text" placeholder="Doe">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>E-mail</label>
-                            <input class="form-control" type="text" placeholder="example@email.com">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Mobile No</label>
-                            <input class="form-control" type="text" placeholder="+123 456 789">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Address Line 1</label>
-                            <input class="form-control" type="text" placeholder="123 Street">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Address Line 2</label>
-                            <input class="form-control" type="text" placeholder="123 Street">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Country</label>
-                            <select class="custom-select">
-                                <option selected>United States</option>
-                                <option>Afghanistan</option>
-                                <option>Albania</option>
-                                <option>Algeria</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>City</label>
-                            <input class="form-control" type="text" placeholder="New York">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>State</label>
-                            <input class="form-control" type="text" placeholder="New York">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>ZIP Code</label>
-                            <input class="form-control" type="text" placeholder="123">
+
+                }
+                else
+                {
+                    <div class="col-lg-8">
+                        <div class="mb-4">
+                            <h4 class="font-weight-semi-bold mb-4">Shipping Address</h4>
+                            <div class="row">
+                                <div class="col-md-6 form-group">
+                                    <label>Country</label>
+                                    <select asp-for="Address.Country" class="custom-select">
+                                        <option selected>Turkey</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>City</label>
+                                    <select asp-items="@ViewBag.cities" asp-for="Address.CityId" style="width: 100%" class="form-control select2-">
+                                        <option disabled selected hidden>Select City</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Street</label>
+                                    <input asp-for="Address.Street" class="form-control" type="text" placeholder="Street">
+                                </div>
+                                <div class="col-md-6 form-group">
+                                    <label>Postal Code</label>
+                                    <input asp-for="Address.PostCode" class="form-control" type="text" placeholder="Postal Code">
+                                </div>
+                                <div class="col align-self-center form-group">
+                                    <label>Address Description</label>
+                                    <input asp-for="Address.AddressDescription" class="form-control" type="text" placeholder="Please write your full address correctly.">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-
+                }
+            }
             <div class="col-lg-4">
                 <div class="card border-secondary mb-5">
                     <div class="card-header bg-secondary border-0">
@@ -155,10 +125,10 @@
                         <h5 class="font-weight-medium mb-3">Products</h5>
                         @foreach (var product in Model.Cart.Products)
                         {
-                            <div class="d-flex justify-content-between">
-                                <p>@product.ProductName (@product.Quantity)</p>
-                                <p>$@product.TotalPrice</p>
-                            </div>
+                    <div class="d-flex justify-content-between">
+                        <p>@product.ProductName (@product.Quantity)</p>
+                        <p>$@product.TotalPrice</p>
+                    </div>
                         }
                         <div class="d-flex justify-content-between">
                             <p>Shipment Fee</p>
@@ -184,6 +154,8 @@
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" asp-for="Cart.CartModelJson" value="@Model.Cart.CartModelJson">
+                    <input type="hidden" asp-for="IsDefaultAddressExists" value="@Model.IsDefaultAddressExists">
                     <div class="card-footer border-secondary bg-transparent">
                         <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
                     </div>
@@ -191,21 +163,21 @@
             </div>
         </div>
     </div>
-    <!-- Checkout End -->
- 
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+</form>
+<!-- Checkout End -->
+<!-- Back to Top -->
+<a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
 
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
-    <!-- Contact Javascript File -->
-    <script src="mail/jqBootstrapValidation.min.js"></script>
-    <script src="mail/contact.js"></script>
+<!-- Contact Javascript File -->
+<script src="mail/jqBootstrapValidation.min.js"></script>
+<script src="mail/contact.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
