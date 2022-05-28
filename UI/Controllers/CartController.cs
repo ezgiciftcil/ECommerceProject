@@ -36,6 +36,7 @@ namespace UI.Controllers
             }
             model.ShipmentPrice = 0;
             model.TotalAmount = cartService.TotalPriceOfCart(priceList).Data + model.ShipmentPrice;
+            model.CartModelJson = Newtonsoft.Json.JsonConvert.SerializeObject(model);
             return View(model);
         }
 

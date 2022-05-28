@@ -8,5 +8,6 @@ namespace UI.Models
         public List<CartProduct> Products { get; set; }
         public decimal TotalAmount { get; set; }
         public decimal ShipmentPrice {get; set;}
+        public string CartModelJson { get; set; }
     }
 }
